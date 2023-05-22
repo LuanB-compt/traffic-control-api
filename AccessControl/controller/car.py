@@ -1,27 +1,32 @@
 from ..data.database import db
 from ..data.models import Car
+import datetime
 
 class CarController():
     def __init__(self):
         pass
 
-    def create(self, request: dict) -> Car.Car:
+    def create(self, request: dict, id_person: int) -> Car.Car:
         new_car = Car.Car(
-            id_person = request['id_person'],
+            id_person = id_person,
             model = request['model'],
             color = request['color'],
-            tag = request['tag']
+            tag = request['tag'],
+            brand = request['brand'],
+            year = request['year'],
+            expiration = datetime.datetime.strptime(request['expiration'], "%Y-%M-%d")
         )
         db.session.add(new_car)
         db.session.flush()
         db.session.commit()
         print(f"\n- Created the {new_car.id} user in database\n")
-        return new_car
+        return new_car.to_dict()
 
     def read(self, id : int or None = None) -> any:
         if type(id) == int:
-            return db.session.query(Car.Car).filter(Car.Car.id == id).first()
-        return db.session.query(Car.Car)
+            return db.session.query(Car.Car).filter(Car.Car.id == id).first().to_dict()
+        cars = db.session.query(Car.Car)
+        return [car.to_dict() for car in cars]
     
     def update(self, request: dict) -> bool:
         try:
