@@ -1,23 +1,38 @@
 import flask as fl
+from ..controller.person import PersonController
 
-bp = fl.Blueprint(name="person_routes", import_name=__name__)
+bp = fl.Blueprint(name="person_routes", url_prefix="/user", import_name=__name__)
+person = PersonController()
 
-@bp.route("/create", methods=["POST"])
+@bp.route("/", methods=["POST"], strict_slashes=False)
 def create():
-    pass
+    new = person.create(fl.request.get_json())
+    if new:
+        return fl.jsonify(new), 201
+    else:
+        return "New car could not be created", 500
+    
 
-@bp.route("/read/", methods="GET")
+@bp.route("/", methods=["GET"], strict_slashes=False)
 def read():
-    pass
+    users = person.read()
+    if users:
+        return users, 200
+    else:
+        return "Users is empty", 404
 
-@bp.route("/read/<int:id>", methods=["GET"])
+@bp.route("/<int:id>", methods=["GET"])
 def read_id(id: int):
-    pass
+    user = person.read(id)
+    if user:
+        return user, 200
+    else:
+        return "User is not found", 404
 
-@bp.route("/update/<int:id>", methods=["POST"])
+@bp.route("/update/<int:id>", methods=["UPDATE"])
 def update(id: int):
     pass
 
-bp.route("/delete/<int:id>", methods=["DELETE"])
+bp.route("/<int:id>", methods=["DELETE"])
 def delete(id: int):
     pass
