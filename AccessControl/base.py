@@ -6,7 +6,6 @@ from .config import Config
 
 def create_app():
     app = fl.Flask(__name__)
-    cors = flask_cors.CORS(app)
 
     app.config.from_object(obj=Config)
     app.register_blueprint(blueprint=car.bp)

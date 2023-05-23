@@ -52,4 +52,4 @@ class CarController():
             return False
 
     def find_by_tag(self, tag: str) -> Car.Car:
-        return db.session.query(Car.Car).filter_by(tag=tag).first()
+        return db.session.query(Car.Car).filter(Car.Car.tag == tag).first()

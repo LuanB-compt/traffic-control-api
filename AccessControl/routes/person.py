@@ -1,8 +1,8 @@
 import flask as fl
-from ..controller.person import PersonController
+from ..utils import *
 
 bp = fl.Blueprint(name="person_routes", url_prefix="/user", import_name=__name__)
-person = PersonController()
+person = personCtrl
 
 @bp.route("/", methods=["POST"], strict_slashes=False)
 def create():
