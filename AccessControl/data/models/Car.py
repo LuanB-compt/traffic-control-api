@@ -8,7 +8,7 @@ class Car(db.Model):
     model = db.Column(db.String(20), unique=False, nullable=True)
     brand = db.Column(db.String(20), unique=False, nullable=True)
     color = db.Column(db.String(10), unique=False, nullable=True)
-    tag = db.Column(db.String(10), unique=False, nullable=False)
+    tag = db.Column(db.String(10), unique=True, nullable=False)
     expiration = db.Column(db.Date, unique=False, nullable=True)
 
     def to_dict(self) -> dict:

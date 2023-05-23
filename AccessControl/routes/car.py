@@ -1,6 +1,7 @@
 import flask as fl
 from ..controller.car import CarController
 from ..controller.person import PersonController
+from ..utils import check_license, get_info
 
 bp = fl.Blueprint(name="car_routes", url_prefix="/car", import_name=__name__)
 car = CarController()
@@ -41,6 +42,13 @@ def read_id(id: int):
 def update(id: int):
     pass
 
-bp.route("/delete/<int:id>", methods=["DELETE"])
+@bp.route("/delete/<int:id>", methods=["DELETE"])
 def delete(id: int):
     pass
+
+@bp.route("/teste", methods=["GET"])
+def teste():
+    checked, vehicle = check_license("ENY-9C32")
+    if checked:
+        return get_info(vehicle), 200
+    return {}, 404

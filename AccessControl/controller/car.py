@@ -14,7 +14,7 @@ class CarController():
             tag = request['tag'],
             brand = request['brand'],
             year = request['year'],
-            expiration = datetime.datetime.strptime(request['expiration'], "%Y-%M-%d")
+            expiration = datetime.datetime.strptime(request['expiration'], "%Y-%m-%d")
         )
         db.session.add(new_car)
         db.session.flush()
@@ -50,3 +50,6 @@ class CarController():
             return True
         except:
             return False
+
+    def find_by_tag(self, tag: str) -> Car.Car:
+        return db.session.query(Car.Car).filter_by(tag=tag).first()
