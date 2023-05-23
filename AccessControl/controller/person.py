@@ -54,5 +54,8 @@ class PersonController:
         except:
             return False
 
-    def find_by_name(self, name: str) -> Person:
+    def find_by_name(self, name: str) -> Person.Person:
         return db.session.query(Person.Person).filter_by(name=name).first()
+    
+    def find_by_id(self, id: int) -> Person.Person:
+        return db.session.query(Person.Person).get(id)
